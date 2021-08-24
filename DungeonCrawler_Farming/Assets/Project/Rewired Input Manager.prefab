@@ -248,9 +248,9 @@ MonoBehaviour:
       _userAssignable: 1
       _categoryId: 0
     - _id: 2
-      _name: Roll
+      _name: Dodge
       _type: 1
-      _descriptiveName: Roll Action
+      _descriptiveName: Dodge Action
       _positiveDescriptiveName: 
       _negativeDescriptiveName: 
       _behaviorId: 0
