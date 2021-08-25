@@ -34,14 +34,12 @@ namespace Project.Scripts.Dungeon
         private float calcPercentage;
 
         public GameObject[] spawnableRoomPrefabs;
-        public GameObject[] initial_Room_Doors;
         public DoorCheck[] door_checkers;
         public Connection_Points_Generation[] points;
 
         // Start is called before the first frame update
         void Start()
         {
-            //if (isInitialRoom && initial_Room_Doors) initial_Room_Doors.SetActive(true);
             if (isInitialRoom) StartCoroutine(GenerateSurroundingRooms());
         }
 
@@ -89,7 +87,7 @@ namespace Project.Scripts.Dungeon
                         {
                             //if point is valid, instantiate room at room check position
                             GameObject _newRoom = Instantiate(spawnableRoomPrefabs[_randomRoom], new Vector2(points[i].transform.position.x, points[i].transform.position.y)
-                            , Quaternion.identity) as GameObject;
+                            , Quaternion.Euler(points[i].transform.up)) as GameObject;
 
                             //If the new room has a room generation component (aka not a 1 door room)
                             if (_newRoom.GetComponent<Room_Generation>())
