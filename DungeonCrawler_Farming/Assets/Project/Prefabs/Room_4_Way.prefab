@@ -3407,7 +3407,7 @@ GameObject:
   - component: {fileID: 4669199581842623381}
   - component: {fileID: 2780549470656216696}
   m_Layer: 0
-  m_Name: InitialRoom
+  m_Name: Room_4_Way
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4243,7 +4243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c97c51580a82a6e4ca31a4096c9b0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInitialRoom: 1
+  isInitialRoom: 0
   dungeonManager: {fileID: 2780549470656216696}
   isValidLocation: 1
   verifiedSpot: 0
@@ -4252,10 +4252,10 @@ MonoBehaviour:
   currentLvl: 0
   difficultyLvl: 5
   spawnableRoomPrefabs:
-  - {fileID: 8053064500314808677, guid: dbc267feb6c13d44d9fe85ea625f411e, type: 3}
   - {fileID: 8053064500314808677, guid: ad92593b715935347960e768772ee988, type: 3}
   - {fileID: 8053064500314808677, guid: 1f2986bfb7c31ca4890e6d1d23c9c18b, type: 3}
   - {fileID: 8053064500314808677, guid: 971f2f778c87e0848af6818fcbb89fe2, type: 3}
+  - {fileID: 8053064500314808677, guid: 3ba81c6a27a215340bd4987d68f82df9, type: 3}
   door_checkers:
   - {fileID: 959674077874423978}
   - {fileID: 4330124821782225125}

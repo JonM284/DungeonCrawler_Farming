@@ -24,7 +24,6 @@ namespace Project.Scripts.Dungeon
         };
 
 
-        public RoomTypes[] spawnableRooms;
         public RoomTypes currentType;
         private RoomTypes obstructingRoomType;
 
@@ -36,6 +35,8 @@ namespace Project.Scripts.Dungeon
         public GameObject[] spawnableRoomPrefabs;
         public DoorCheck[] door_checkers;
         public Connection_Points_Generation[] points;
+
+        [SerializeField] private Transform parent; 
 
         // Start is called before the first frame update
         void Start()
@@ -87,16 +88,18 @@ namespace Project.Scripts.Dungeon
                         {
                             //if point is valid, instantiate room at room check position
                             GameObject _newRoom = Instantiate(spawnableRoomPrefabs[_randomRoom], new Vector2(points[i].transform.position.x, points[i].transform.position.y)
-                            , Quaternion.Euler(points[i].transform.up)) as GameObject;
-
+                            , Quaternion.Euler(new Vector3(0,0,points[i].transform.localRotation.z)), parent) as GameObject;
+                            var newRoom = _newRoom.GetComponent<Room_Generation>();
+                            
                             //If the new room has a room generation component (aka not a 1 door room)
                             if (_newRoom.GetComponent<Room_Generation>())
                             {
-                                _newRoom.GetComponent<Room_Generation>().CheckSurroundings();
-                                yield return new WaitUntil(() => _newRoom.GetComponent<Room_Generation>().executedWaitCheck);
-                                if (_newRoom != null) _newRoom.GetComponent<Room_Generation>().StartGeneration(this.currentLvl + 1, this.difficultyLvl);
-                                dungeonManager.AddToDungeonList(_newRoom.GetComponent<Room_Generation>());
-                                _newRoom.GetComponent<Room_Generation>().dungeonManager = this.dungeonManager;
+                                _newRoom.GetComponent<Room_Generation>().SetParent(parent);
+                                newRoom.CheckSurroundings();
+                                yield return new WaitUntil(() => newRoom.executedWaitCheck);
+                                if (_newRoom != null) newRoom.StartGeneration(this.currentLvl + 1, this.difficultyLvl);
+                                dungeonManager.AddToDungeonList(newRoom);
+                                newRoom.dungeonManager = this.dungeonManager;
                             }
                             else
                             {
@@ -111,8 +114,13 @@ namespace Project.Scripts.Dungeon
                         yield return new WaitForEndOfFrame();
                     }
                 }
-                StartCoroutine(GenerateDoors());
+                //StartCoroutine(GenerateDoors());
             }
+        }
+
+        public void SetParent(Transform _parent)
+        {
+            parent = _parent;
         }
 
         public IEnumerator GenerateDoors()
@@ -146,7 +154,7 @@ namespace Project.Scripts.Dungeon
                 }
                 door_checkers[i].enabled = false;
             }
-            StopCoroutine(GenerateDoors());
+            //StopCoroutine(GenerateDoors());
             yield return new WaitForEndOfFrame();
         }
 

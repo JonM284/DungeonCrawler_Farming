@@ -65,7 +65,7 @@ namespace Project.Scripts.Dungeon
             obstructionObjects[_desiredInt].SetActive(true);
         }
 
-        private void OnTriggerStay(Collider other)
+        private void OnTriggerStay2D(Collider2D other)
         {
             if (other.gameObject.tag == "Door")
             {
