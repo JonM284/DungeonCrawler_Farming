@@ -2427,7 +2427,7 @@ GameObject:
   - component: {fileID: 4669199581842623381}
   - component: {fileID: 2780549470656216696}
   m_Layer: 0
-  m_Name: Room_2_Way_Straight
+  m_Name: Vert_Room_2_Way_Straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3348,14 +3348,27 @@ MonoBehaviour:
   isValidLocation: 1
   verifiedSpot: 0
   executedWaitCheck: 0
-  currentType: 1
+  spawnableRooms:
+  - currentType: 0
+    roomPrefabs:
+    - {fileID: 8053064500314808677, guid: dbc267feb6c13d44d9fe85ea625f411e, type: 3}
+    - {fileID: 8053064500314808677, guid: 4ddc6a72dceee6c48a802d5d07c2a151, type: 3}
+    - {fileID: 8053064500314808677, guid: ad92593b715935347960e768772ee988, type: 3}
+    - {fileID: 8053064500314808677, guid: e7b59008a5e892e40a04afd680fb6b9e, type: 3}
+    - {fileID: 8053064500314808677, guid: fdee572f6514fb247985b0271d665819, type: 3}
+    - {fileID: 8053064500314808677, guid: 564513fc9ddbe794c945936524f051c6, type: 3}
+    - {fileID: 8053064500314808677, guid: f29429af40a677049b26604d597530ac, type: 3}
+  - currentType: 1
+    roomPrefabs:
+    - {fileID: 8053064500314808677, guid: dbc267feb6c13d44d9fe85ea625f411e, type: 3}
+    - {fileID: 8053064500314808677, guid: e28062d3fe1555b42ab6aa6aecc1e5eb, type: 3}
+    - {fileID: 8053064500314808677, guid: ad92593b715935347960e768772ee988, type: 3}
+    - {fileID: 8053064500314808677, guid: e7b59008a5e892e40a04afd680fb6b9e, type: 3}
+    - {fileID: 8053064500314808677, guid: 1f2986bfb7c31ca4890e6d1d23c9c18b, type: 3}
+    - {fileID: 8053064500314808677, guid: ee0f7698e1dd4a048a4f60ad94490b16, type: 3}
+    - {fileID: 8053064500314808677, guid: 3ba81c6a27a215340bd4987d68f82df9, type: 3}
   currentLvl: 0
   difficultyLvl: 5
-  spawnableRoomPrefabs:
-  - {fileID: 8053064500314808677, guid: dbc267feb6c13d44d9fe85ea625f411e, type: 3}
-  - {fileID: 8053064500314808677, guid: ad92593b715935347960e768772ee988, type: 3}
-  - {fileID: 8053064500314808677, guid: 1f2986bfb7c31ca4890e6d1d23c9c18b, type: 3}
-  - {fileID: 8053064500314808677, guid: 3ba81c6a27a215340bd4987d68f82df9, type: 3}
   door_checkers:
   - {fileID: 959674077874423978}
   - {fileID: 1344211452660284968}

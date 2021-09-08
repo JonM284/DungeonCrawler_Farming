@@ -9,12 +9,6 @@ namespace Project.Scripts.Dungeon
 
         public GameObject obstructingRoom;
 
-        public int GetObstructedRoomType()
-        {
-            if (obstructingRoom.GetComponent<Room_Generation>() != null) return (int)obstructingRoom.GetComponent<Room_Generation>().currentType;
-            else return 0;
-        }
-
         private void OnTriggerStay2D(Collider2D other)
         {
             if (other.gameObject.tag == "Room")

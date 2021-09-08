@@ -3,6 +3,22 @@ using UnityEngine;
 
 namespace Project.Scripts.Dungeon
 {
+    [System.Serializable]
+    public class RandomRooms
+    {
+        public enum Directions
+        {
+            Top,
+            Bottom,
+            Left,
+            Right
+        };
+
+        public Directions currentType;
+        public GameObject[] roomPrefabs;
+    }
+
+
     public class Room_Generation : MonoBehaviour
     {
 
@@ -14,25 +30,15 @@ namespace Project.Scripts.Dungeon
         public bool verifiedSpot = false;
         public bool executedWaitCheck = false;
 
-        public enum RoomTypes
-        {
-            OneDoor,
-            TwoDoor,
-            Corner,
-            ThreeDoor,
-            FourDoor,
-        };
-
-
-        public RoomTypes currentType;
-        private RoomTypes obstructingRoomType;
+        [SerializeField] private RandomRooms[] spawnableRooms;
+        
 
         public int currentLvl;
         public int difficultyLvl;
 
         private float calcPercentage;
 
-        public GameObject[] spawnableRoomPrefabs;
+
         public DoorCheck[] door_checkers;
         public Connection_Points_Generation[] points;
 
@@ -69,11 +75,18 @@ namespace Project.Scripts.Dungeon
                         int _randomRoom = 0;
                         if (!isInitialRoom)
                         {
-                            if (calcPercentage < 0.33f) _randomRoom = Random.value <= 0.75f ? Random.Range(0, spawnableRoomPrefabs.Length - 1) : Random.Range(0, spawnableRoomPrefabs.Length);
-                            else if (calcPercentage >= 0.33f && calcPercentage < 0.66f) _randomRoom = Random.value <= 0.5f ? Random.Range(0, spawnableRoomPrefabs.Length - 1) : Random.Range(0, spawnableRoomPrefabs.Length);
-                            else if (calcPercentage >= 0.66f && calcPercentage < 0.8f) _randomRoom = Random.value <= 0.2 ? Random.Range(0, spawnableRoomPrefabs.Length - 1) : Random.Range(spawnableRoomPrefabs.Length - 1, spawnableRoomPrefabs.Length);
+                            if (calcPercentage < 0.33f)
+                                _randomRoom = Random.value <= 0.75f ? Random.Range(0, spawnableRooms[i].roomPrefabs.Length - 1) :
+                                    Random.Range(0, spawnableRooms[i].roomPrefabs.Length);
+                            else if (calcPercentage >= 0.33f && calcPercentage < 0.66f)
+                                _randomRoom = Random.value <= 0.5f ? Random.Range(0, spawnableRooms[i].roomPrefabs.Length - 1) :
+                                    Random.Range(0, spawnableRooms[i].roomPrefabs.Length);
+                            else if (calcPercentage >= 0.66f && calcPercentage < 0.8f)
+                                _randomRoom = Random.value <= 0.2 ? Random.Range(0, spawnableRooms[i].roomPrefabs.Length - 1) :
+                                    Random.Range(spawnableRooms[i].roomPrefabs.Length - 1, spawnableRooms[i].roomPrefabs.Length);
 
-                            if (currentLvl >= difficultyLvl - 1) _randomRoom = spawnableRoomPrefabs.Length - 1;
+                            if (currentLvl >= difficultyLvl - 1)
+                                _randomRoom = spawnableRooms[i].roomPrefabs.Length - 1;
 
 
                         }
@@ -87,8 +100,9 @@ namespace Project.Scripts.Dungeon
                         if (points[i].isValid)
                         {
                             //if point is valid, instantiate room at room check position
-                            GameObject _newRoom = Instantiate(spawnableRoomPrefabs[_randomRoom], new Vector2(points[i].transform.position.x, points[i].transform.position.y)
-                            , Quaternion.Euler(new Vector3(0,0,points[i].transform.localRotation.z)), parent) as GameObject;
+                            //TODO: Change roomPrefabs[0] to be randomly chosen.
+                            GameObject _newRoom = Instantiate(spawnableRooms[i].roomPrefabs[_randomRoom], new Vector2(points[i].transform.position.x, points[i].transform.position.y)
+                            , Quaternion.identity, parent) as GameObject;
                             var newRoom = _newRoom.GetComponent<Room_Generation>();
                             
                             //If the new room has a room generation component (aka not a 1 door room)
@@ -133,11 +147,7 @@ namespace Project.Scripts.Dungeon
                     {
                         if (door_checkers[i].adjacent_Object.GetComponentInParent<Room_Generation>() != null)
                         {
-                            if (door_checkers[i].adjacent_Object.GetComponentInParent<Room_Generation>().currentType != RoomTypes.OneDoor)
-                            {
-                                door_checkers[i].GenerateObject(2);
-                                Debug.Log($"<color=cyan>Level: {currentLvl} Type: {currentType}, Next Room:{door_checkers[i].adjacent_Object.GetComponentInParent<Room_Generation>().currentType} Added breakablewall</color>");
-                            }
+                            door_checkers[i].GenerateObject(2);
                         }
                         else
                         {
